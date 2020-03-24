@@ -4,16 +4,16 @@
 #   | |_) | '__/ _ \| |_| | |/ _ \____\ \ / /\___ \| |   / _ \ / _` |/ _ \
 #  |  __/| | | (_) |  _| | |  __/_____\ V /  ___) | |__| (_) | (_| |  __/
 # |_|   |_|  \___/|_| |_|_|\___|      \_/  |____/ \____\___/ \__,_|\___|
-#                   VSCode profile - Powershell Core v6+
+#                   VSCode Profile - Powershell Core v6+
 # ========================================================================
 
-#requires -Version 6
 Clear-Host
+#requires -Version 6
 $PSDefaultParameterValues['Install-Module:Scope'] = 'CurrentUser'
-$host.privatedata.ProgressBackgroundColor = "Black" # Progress bar bg = black
-$host.privatedata.ProgressForegroundColor = "DarkYellow" # Progress bar fg = yellow
+$host.privatedata.ProgressForegroundColor = "DarkYellow"
+$host.privatedata.ProgressBackgroundColor = "Black"
 
-# ========================================================================
+#  ============================================================================
 
 #region # * Import Modules
 Import-Module Get-ChildItemColor
@@ -28,6 +28,7 @@ if (Get-Module oh-my-posh) {
 }
 
 Import-Module PoShFuck # When you type a command incorrectly, don't say 'fuck', type it!
+Import-Module PSquire # Custom Powershell module
 #endregion
 
 #region # * SSH-Agent
@@ -51,28 +52,11 @@ Set-Alias / Set-DriveRoot -Option AllScope
 Function Invoke-Explorer { param($Path) Switch ($Path) { "" { Explorer $PWD } Default { Explorer $Path } } }
 Set-Alias e Invoke-Explorer -Option AllScope
 
-Function Invoke-Help { param($Command)Get-Help $Command -ShowWindow }
-Set-Alias h Invoke-Help -Option AllScope
-
-# AHK Simplistic Bypass
 Function Invoke-AutoHotkey { & 'C:\Program Files\AutoHotkey\AutoHotkey.exe' $args }
 Set-Alias ahk Invoke-AutoHotkey
 
 # Unix-Like ^D to close active terminal
 Set-PSReadLineKeyHandler -Key ctrl+d -Function ViExit
-#endregion
-
-#region # * Script Importer
-$Importer = $True
-if ($Importer) { $ImportFiles = Get-ChildItem "$PSScriptRoot\Import\" -Recurse -Filter *.ps1 }
-For ($i = 1; $i -le $ImportFiles.count; $i++) {
-    $FilePath = $ImportFiles[$i].fullname
-    $PercentComplete = ($i / $ImportFiles.count * 100)
-    if ($FilePath) {
-        Write-Progress -Activity "Importing files:" -status $FilePath -PercentComplete $PercentComplete
-        . $FilePath
-    }
-}
 #endregion
 
 #region # * Chocolatey profile
@@ -88,4 +72,4 @@ if (Get-Command conda.exe -erroraction 'Ignore' ) {
 }
 #endregion
 
-# ========================================================================
+#  ============================================================================

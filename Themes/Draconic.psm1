@@ -69,11 +69,8 @@ function Write-Theme {
     # Python virtual environment
     if (Test-VirtualEnv) {
         $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentSeparator -ForegroundColor $sl.Colors.SegmentSeparator -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
-        $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.SessionInfoBackgroundColor -BackgroundColor $sl.Colors.VirtualEnvBackgroundColor
-        $prompt += Write-Prompt -Object "$($sl.PromptSymbols.VirtualEnvSymbol) $(Get-VirtualEnvName) " -ForegroundColor $sl.Colors.VirtualEnvForegroundColor -BackgroundColor $sl.Colors.VirtualEnvBackgroundColor
-        $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.VirtualEnvBackgroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor
+        $prompt += Write-Prompt -Object " $(Get-VirtualEnvName) " -ForegroundColor $sl.Colors.VirtualEnvForegroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
     }
-    # else { $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.SessionInfoBackgroundColor -BackgroundColor $sl.Colors.PromptBackgroundColor }
 
     # Current Filepath
     $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentSeparator -ForegroundColor $sl.Colors.SegmentSeparator -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
@@ -121,18 +118,18 @@ $sl.Colors.PromptForegroundColor = [ConsoleColor]::White
 $sl.Colors.PromptStopwatchColor = [ConsoleColor]::DarkGray
 $sl.Colors.PromptSymbolColor = [ConsoleColor]::Gray
 $sl.Colors.UserSessionInfoForegroundColor = [ConsoleColor]::Gray
-$sl.Colors.VirtualEnvBackgroundColor = [System.ConsoleColor]::Red
-$sl.Colors.VirtualEnvForegroundColor = [System.ConsoleColor]::White
+$sl.Colors.SessionInfoComputerForegroundColor = [ConsoleColor]::Gray
 $sl.Colors.WithBackgroundColor = [ConsoleColor]::DarkBlue
 $sl.Colors.WithForegroundColor = [ConsoleColor]::DarkRed
 
+# $sl.Colors.VirtualEnvBackgroundColor = [System.ConsoleColor]::Red
+$sl.Colors.VirtualEnvForegroundColor = [System.ConsoleColor]::Yellow
+
 if (Test-Administrator) {
     $sl.Colors.SessionInfoUsernameForegroundColor = [ConsoleColor]::DarkYellow
-    $sl.Colors.SessionInfoComputerForegroundColor = [ConsoleColor]::Gray
     $sl.Colors.SegmentSeparator = [ConsoleColor]::DarkYellow
 }
 else {
     $sl.Colors.SessionInfoUsernameForegroundColor = [ConsoleColor]::Blue
-    $sl.Colors.SessionInfoComputerForegroundColor = [ConsoleColor]::Gray
     $sl.Colors.SegmentSeparator = [ConsoleColor]::Blue
 }

@@ -1,17 +1,17 @@
-#  ============================================================================
-#      ____                            _          _ _        ____
-#    |  _ \ _____      _____ _ __ ___| |__   ___| | |      / ___|___  _ __ ___
-#   | |_) / _ \ \ /\ / / _ \ '__/ __| '_ \ / _ \ | |_____| |   / _ \| '__/ _ \
-#  |  __/ (_) \ V  V /  __/ |  \__ \ | | |  __/ | |_____| |__| (_) | | |  __/
-# |_|   \___/ \_/\_/ \___|_|  |___/_| |_|\___|_|_|      \____\___/|_|  \___|
-#                    User profile - Powershell Core v6+
-#  ============================================================================
+# ==========================================================
+#     ____              __ _ _            _   _
+#    |  _ \ _ __ ___  / _(_) | ___      | | | |___  ___ _ __
+#   | |_) | '__/ _ \| |_| | |/ _ \_____| | | / __|/ _ \ '__|
+#  |  __/| | | (_) |  _| | |  __/_____| |_| \__ \  __/ |
+# |_|   |_|  \___/|_| |_|_|\___|      \___/|___/\___|_|
+#           User profile - Powershell Core v6+
+# ==========================================================
 
-#requires -Version 6
 Clear-Host
+#requires -Version 6
 $PSDefaultParameterValues['Install-Module:Scope'] = 'CurrentUser'
-$host.privatedata.ProgressBackgroundColor = "Black";	# Progress bar bg = black
-$host.privatedata.ProgressForegroundColor = "Yellow";	# Progress bar fg = yellow
+$host.privatedata.ProgressForegroundColor = "DarkYellow"
+$host.privatedata.ProgressBackgroundColor = "Black"
 
 #  ============================================================================
 
@@ -26,7 +26,9 @@ if (Get-Module oh-my-posh) {
     # Set-Theme Paradox
     Set-Theme Draconic
 }
+
 Import-Module PoShFuck # When you type a command incorrectly, don't say 'fuck', type it!
+Import-Module PSquire # Custom Powershell module
 #endregion
 
 #region # * SSH-Agent
@@ -47,11 +49,8 @@ function Set-DriveRoot { Set-Location "$($PWD.Drive.Name):\" }
 Set-Alias \ Set-DriveRoot -Option AllScope
 Set-Alias / Set-DriveRoot -Option AllScope
 
-Function Invoke-Explorer { param($Path) Switch ($Path) { "" { Explorer $PWD } Default { Explorer $Path } } }
+Function Invoke-Explorer { param($Path) Switch ($Path) { "" { explorer $PWD } Default { explorer $Path } } }
 Set-Alias e Invoke-Explorer -Option AllScope
-
-Function Invoke-Help { param($Command)Get-Help $Command -ShowWindow }
-Set-Alias h Invoke-Help -Option AllScope
 
 # AHK Simplistic Bypass
 Function Invoke-AutoHotkey { & 'C:\Program Files\AutoHotkey\AutoHotkey.exe' $args }
@@ -60,18 +59,6 @@ Set-Alias ahk Invoke-AutoHotkey
 # Unix-Like ^D to close active terminal
 Set-PSReadLineKeyHandler -Key ctrl+d -Function ViExit
 #endregion
-
-#region # * Script Importer
-$Importer = $True
-if ($Importer) { $ImportFiles = Get-ChildItem "$PSScriptRoot\Import\" -Recurse -Filter *.ps1 }
-For ($i = 1; $i -le $ImportFiles.count; $i++) {
-    $FilePath = $ImportFiles[$i].fullname
-    $PercentComplete = ($i / $ImportFiles.count * 100)
-    if ($FilePath) {
-        Write-Progress -Activity "Importing files:" -status $FilePath -PercentComplete $PercentComplete
-        . $FilePath
-    }
-}
 
 #region # * Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"

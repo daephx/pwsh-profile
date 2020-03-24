@@ -1,5 +1,18 @@
 
+# ==========================================================
+#     ____              __ _ _            _   _           _
+#    |  _ \ _ __ ___  / _(_) | ___      | | | | ___  ___| |_
+#   | |_) | '__/ _ \| |_| | |/ _ \_____| |_| |/ _ \/ __| __|
+#  |  __/| | | (_) |  _| | |  __/_____|  _  | (_) \__ \ |_
+# |_|   |_|  \___/|_| |_|_|\___|     |_| |_|\___/|___/\__|
+#           Host profile - Powershell Core v6+
+# ==========================================================
+
 Clear-Host
 $PSDefaultParameterValues['Install-Module:Scope'] = 'CurrentUser'
-$host.privatedata.ProgressBackgroundColor = "Black" # Progress bar bg = black
-$host.privatedata.ProgressForegroundColor = "Yellow" # Progress bar fg = yellow
+$host.privatedata.ProgressForegroundColor = "DarkYellow"
+$host.privatedata.ProgressBackgroundColor = "Black"
+
+#  ============================================================================
+
+#  ============================================================================
