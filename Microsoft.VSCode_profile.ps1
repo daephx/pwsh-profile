@@ -21,10 +21,10 @@ Import-Module posh-git # Ensure posh-git is loaded
 Import-Module oh-my-posh ; # Ensure oh-my-posh is loaded
 
 if (Get-Module oh-my-posh) {
-    $ThemeSettings.MyThemesLocation = (Split-Path $profile) + '\Themes'
-    # Set-Theme tehrob
-    # Set-Theme Paradox
-    Set-Theme Draconic
+	$ThemeSettings.MyThemesLocation = (Split-Path $profile) + '\Themes'
+	# Set-Theme tehrob
+	# Set-Theme Paradox
+	Set-Theme Draconic
 }
 
 Import-Module PoShFuck # When you type a command incorrectly, don't say 'fuck', type it!
@@ -37,8 +37,8 @@ Write-Verbose -Message ('SSH Agent Status is stopped: {0}' -f $sshAgentStopped)
 
 # Start SshAgent if not already
 if ($sshAgentStopped) {
-    Write-Verbose -Message 'Stating SSh Agent'
-    Start-Service -Name 'ssh-agent'
+	Write-Verbose -Message 'Stating SSh Agent'
+	Start-Service -Name 'ssh-agent'
 }
 #endregion
 
@@ -49,7 +49,7 @@ function Set-DriveRoot { Set-Location "$($PWD.Drive.Name):\" }
 Set-Alias \ Set-DriveRoot -Option AllScope
 Set-Alias / Set-DriveRoot -Option AllScope
 
-Function Invoke-Explorer { param($Path) Switch ($Path) { "" { Explorer $PWD } Default { Explorer $Path } } }
+Function Invoke-Explorer { param($Path = $PWD) Invoke-Expression explorer $Path }
 Set-Alias e Invoke-Explorer -Option AllScope
 
 Function Invoke-AutoHotkey { & 'C:\Program Files\AutoHotkey\AutoHotkey.exe' $args }
@@ -62,13 +62,13 @@ Set-PSReadLineKeyHandler -Key ctrl+d -Function ViExit
 #region # * Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
-    Import-Module "$ChocolateyProfile"
+	Import-Module "$ChocolateyProfile"
 }
 #endregion
 
 #region # !! Contents within this block are managed by 'conda init' !!
 if (Get-Command conda.exe -erroraction 'Ignore' ) {
-    (& "$((Get-Command conda.exe).source)" "shell.powershell" "hook") | Out-String | Invoke-Expression
+	(& "$((Get-Command conda.exe).source)" "shell.powershell" "hook") | Out-String | Invoke-Expression
 }
 #endregion
 
