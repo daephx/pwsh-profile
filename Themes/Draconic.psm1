@@ -1,6 +1,6 @@
 #requires -Version 2 -Modules posh-git, oh-my-posh
 
-function Set-Stopwatch {
+Function Set-Stopwatch {
     $LastExecutionTimeSpan = if (@(Get-History).Count -gt 0) {
         Get-History | Select-Object -Last 1 | ForEach-Object {
             New-TimeSpan -Start $_.StartExecutionTime -End $_.EndExecutionTime
@@ -19,28 +19,28 @@ function Set-Stopwatch {
     return "[$LastExecutionShortTime]"
 }
 
-function Get-ShortPath {
-    if ($pwd.path -eq $HOME) { return $($pwd.path.Replace(($HOME), '~')) }
-    $Drive = $pwd.Drive.Name
-    $Pwds = $pwd -split "\\" | Where-Object { -Not [String]::IsNullOrEmpty($_) }
-    $PwdPath = switch ($Pwds.Count) {
+Function Get-ShortPath {
+    if ($pwd.path -eq $HOME) { return $($PWD.Path.Replace(($HOME), '~')) }
+    $Drive = $PWD.Drive.Name
+    $Parts = $PWD -split "\\" | Where-Object { -Not [String]::IsNullOrEmpty($_) }
+    $PwdPath = switch ($Parts.Count) {
         { $_ -gt 3 } {
-            $ParentFolder = Split-Path -Path (Split-Path -Path $pwd -Parent) -Leaf
-            $CurrentFolder = Split-Path -Path $pwd -Leaf
+            $ParentFolder = Split-Path -Path (Split-Path -Path $PWD -Parent) -Leaf
+            $CurrentFolder = Split-Path -Path $PWD -Leaf
             "..\$ParentFolder\$CurrentFolder\"
         }
         { $_ -eq 3 } {
-            $ParentFolder = Split-Path -Path (Split-Path -Path $pwd -Parent) -Leaf
-            $CurrentFolder = Split-Path -Path $pwd -Leaf
+            $ParentFolder = Split-Path -Path (Split-Path -Path $PWD -Parent) -Leaf
+            $CurrentFolder = Split-Path -Path $PWD -Leaf
             "$ParentFolder\$CurrentFolder\"
         }
-        { $_ -eq 2 } { Split-Path -Path $pwd -Leaf }
+        { $_ -eq 2 } { Split-Path -Path $PWD -Leaf }
         default { "" }
     }
     return "$Drive`:\$PwdPath"
 }
 
-function Write-Theme {
+Function Write-Theme {
     param(
         [bool]$lastCommandFailed,
         [string]$with
@@ -66,10 +66,16 @@ function Write-Theme {
     }
     $prompt += Write-Prompt -Object "$computer " -ForegroundColor $sl.Colors.SessionInfoComputerForegroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
 
-    # Python virtual environment
+    # Python virtual environments
     if (Test-VirtualEnv) {
         $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentSeparator -ForegroundColor $sl.Colors.SegmentSeparator -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
         $prompt += Write-Prompt -Object " $(Get-VirtualEnvName) " -ForegroundColor $sl.Colors.VirtualEnvForegroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
+    }
+    elseif ($env:CONDA_DEFAULT_ENV) {
+        if ($env:CONDA_DEFAULT_ENV -eq "base" -or $env:CONDA_PREFIX.StartsWith("$HOME\.conda")) { $CondaEnvName = $env:CONDA_DEFAULT_ENV }
+        else { $CondaEnvName = Split-Path (Split-Path $env:CONDA_DEFAULT_ENV -Parent) -Leaf }
+        $prompt += Write-Prompt -Object $sl.PromptSymbols.SegmentSeparator -ForegroundColor $sl.Colors.SegmentSeparator -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
+        $prompt += Write-Prompt -Object " $($CondaEnvName) " -ForegroundColor $sl.Colors.VirtualEnvForegroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
     }
 
     # Current Filepath
@@ -86,7 +92,7 @@ function Write-Theme {
         $prompt += Write-Prompt -Object " $VCSPrefix$($VCSStatus.vcinfo)$VCSSuffix " -ForegroundColor $($VCSStatus.backgroundcolor)
     }
 
-    # Prompt ending chracter
+    # Prompt ending character
     $prompt += Write-Prompt -Object $sl.PromptSymbols.EndSymbol -ForegroundColor $sl.Colors.SegmentSeparator -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
 
     # Command Stopwatch
