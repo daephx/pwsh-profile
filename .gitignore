@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/powershell
 # Edit at https://www.gitignore.io/?templates=powershell
 
@@ -15,3 +14,5 @@ modules/
 private/
 tasks/
 tests/
+
+GithubAccessToken.txt
