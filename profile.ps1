@@ -20,7 +20,7 @@ $Host.UI.RawUI.BackgroundColor = 'Black'
 $Host.UI.RawUI.ForegroundColor = 'White'
 
 $Host.UI.RawUI.WindowTitle = "PowerShell {0}" -f $PSVersionTable.PSVersion.ToString()
-$Host.UI.RawUI.WindowTitle += $isAdmin ? " [ADMIN]" : ""
+$Host.UI.RawUI.WindowTitle += If ($isAdmin) {" [ADMIN]"} Else {""}
 
 # Error, warning and debug colors
 $Host.PrivateData.DebugBackgroundColor = 'Black'

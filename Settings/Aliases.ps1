@@ -12,7 +12,6 @@ Set-Alias -Name / -Value Set-DriveRoot
 Set-Alias -Name \ -Value Set-DriveRoot
 
 Set-Alias -Name edit -Value Edit-File
-Set-Alias -Name h -Value Get-Help
 Set-Alias -Name which -Value where.exe
 
 function Exit-PSInstance { exit }
@@ -47,7 +46,7 @@ function sha256 { Get-FileHash -Algorithm SHA256 @args }
 
 # Replace default list directory utility
 if (Get-Command "eza" -ErrorAction Ignore) {
-    Remove-Alias -Name "ls"
+    Remove-Item Alias:ls
     function global:l { eza --group-directories-first --icons -l  @args }
     function global:la { eza --group-directories-first --icons -fl @args }
     function global:ls { eza --group-directories-first -l @args }
@@ -71,7 +70,7 @@ if ($env:TERM_PROGRAM -eq "vscode") {
 }
 
 # Git aliases
-Remove-Alias -Force -Name "gl"
+Remove-Item -Force Alias:gl
 Set-Alias -Name g -Value "git"
 Set-Alias -Name gti -Value "git"
 function gd { git diff @args }
