@@ -48,7 +48,7 @@ function sha256 { Get-FileHash -Algorithm SHA256 @args }
 if (Get-Command "eza" -ErrorAction Ignore) {
     Remove-Item Alias:ls
     function global:l { eza --group-directories-first --icons -l  @args }
-    function global:la { eza --group-directories-first --icons -fl @args }
+    function global:la { eza --group-directories-first --icons -al @args }
     function global:ls { eza --group-directories-first -l @args }
     function global:lt { eza --group-directories-first --tree -L2 @args }
 }
