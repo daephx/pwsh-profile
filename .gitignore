@@ -10,9 +10,10 @@
 
 # End of https://www.gitignore.io/api/powershell
 
-modules/
-private/
-tasks/
-tests/
+### Project ###
 
-GithubAccessToken.txt
+# Powershell modules directory
+modules/
+
+# Powershell scripts directory
+scripts/
