@@ -46,11 +46,19 @@ function sha256 { Get-FileHash -Algorithm SHA256 @args }
 
 # Replace default list directory utility
 if (Get-Command "eza" -ErrorAction Ignore) {
+
+    $defaults = @(
+        "--classify"
+        "--group-directories-first"
+        "--icons=auto"
+        "--time-style=long-iso"
+    )
+
     Remove-Item Alias:ls
-    function global:l { eza --group-directories-first --icons -l  @args }
-    function global:la { eza --group-directories-first --icons -al @args }
-    function global:ls { eza --group-directories-first -l @args }
-    function global:lt { eza --group-directories-first --tree -L2 @args }
+    function global:l  { eza $defaults -l @args }
+    function global:la { eza $defaults -al @args }
+    function global:ls { eza $defaults --icons=never @args }
+    function global:lt { eza $defaults --tree -L2 @args }
 }
 else {
     function global:l { Get-ChildItem @args }
