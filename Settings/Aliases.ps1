@@ -69,6 +69,11 @@ if (Get-Command "git" -ErrorAction Ignore) {
     function gs { git status @args }
 }
 
+# Override cat with alias to bat for syntax highlighting
+if (Get-Command "bat" -ErrorAction Ignore) {
+    Set-Alias -Name cat -Value bat
+}
+
 # Replace default list directory utility
 if (Get-Command "eza" -ErrorAction Ignore) {
 
