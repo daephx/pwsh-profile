@@ -44,14 +44,14 @@ if ($PSVersionTable.PSVersion.Major -ge 6) { $CurrentShell = "pwsh" }
 else { $CurrentShell = "powershell" }
 
 # Set prompt command
-if (Get-Command "starship" -ErrorAction SilentlyContinue) {
+if (Get-Command "oh-my-posh" -ErrorAction Ignore) {
+    $ENV:POSH_THEME = "$ENV:POSH_THEMES_PATH\skellum.omp.toml"
+    oh-my-posh init $CurrentShell | Invoke-Expression
+}
+elseif (Get-Command "starship" -ErrorAction SilentlyContinue) {
     $env:STARSHIP_CONFIG = $PSScriptRoot | Split-Path | Join-Path -ChildPath starship.toml
     $ENV:STARSHIP_CACHE = "$ENV:TEMP\starship"
     starship init powershell --print-full-init | Out-String | Invoke-Expression
-}
-elseif (Get-Command "oh-my-posh" -ErrorAction Ignore) {
-    $ENV:POSH_THEME = "$ENV:POSH_THEMES_PATH\skellum.omp.toml"
-    oh-my-posh init $CurrentShell | Invoke-Expression
 }
 else {
     # Fallback to default prompt
