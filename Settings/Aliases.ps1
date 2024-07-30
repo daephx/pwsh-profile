@@ -57,7 +57,10 @@ if ($env:TERM_PROGRAM -eq "vscode") {
 
 # Check if git is installed
 if (Get-Command "git" -ErrorAction Ignore) {
-    Remove-Item -Force Alias:gl
+    # Remove builtin aliases
+    Remove-Item -Path Alias:gl -Force -ErrorAction SilentlyContinue
+
+    # Set our own custom commands
     Set-Alias -Name g -Value "git"
     Set-Alias -Name gti -Value "git"
     function gd { git diff @args }
@@ -76,7 +79,10 @@ if (Get-Command "eza" -ErrorAction Ignore) {
         "--time-style=long-iso"
     )
 
-    Remove-Item Alias:ls
+    # Remove builtin aliases
+    Remove-Item -Path Alias:ls -Force -ErrorAction SilentlyContinue
+
+    # Set our own custom commands
     function global:l  { eza $defaults -l @args }
     function global:la { eza $defaults -al @args }
     function global:ls { eza $defaults --icons=never @args }
