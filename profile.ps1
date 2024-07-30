@@ -1,4 +1,5 @@
-# profile.ps1 | PowerShell user profile
+﻿# profile.ps1: PowerShell User Profile Configuration
+# This script sets up custom aliases, functions, and environment settings.
 
 # Find out if the current user identity is elevated (has admin rights)
 $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -16,21 +17,21 @@ $PSDefaultParameterValues["Install-Module:Scope"] = "CurrentUser"
 # Main window colors
 $Host.PrivateData.ProgressBackgroundColor = "Black"
 $Host.PrivateData.ProgressForegroundColor = "DarkYellow"
-$Host.UI.RawUI.BackgroundColor = 'Black'
-$Host.UI.RawUI.ForegroundColor = 'White'
+$Host.UI.RawUI.BackgroundColor = "Black"
+$Host.UI.RawUI.ForegroundColor = "White"
 
 $Host.UI.RawUI.WindowTitle = "PowerShell {0}" -f $PSVersionTable.PSVersion.ToString()
-$Host.UI.RawUI.WindowTitle += If ($isAdmin) {" [ADMIN]"} Else {""}
+$Host.UI.RawUI.WindowTitle += If ($isAdmin) { " [ADMIN]" } Else { "" }
 
 # Error, warning and debug colors
-$Host.PrivateData.DebugBackgroundColor = 'Black'
-$Host.PrivateData.DebugForegroundColor = 'Gray'
-$Host.PrivateData.ErrorBackgroundColor = 'Black'
-$Host.PrivateData.ErrorForegroundColor = 'Red'
-$Host.PrivateData.VerboseBackgroundColor = 'Black'
-$Host.PrivateData.VerboseForegroundColor = 'Gray'
-$Host.PrivateData.WarningBackgroundColor = 'Black'
-$Host.PrivateData.WarningForegroundColor = 'Yellow'
+$Host.PrivateData.DebugBackgroundColor = "Black"
+$Host.PrivateData.DebugForegroundColor = "Gray"
+$Host.PrivateData.ErrorBackgroundColor = "Black"
+$Host.PrivateData.ErrorForegroundColor = "Red"
+$Host.PrivateData.VerboseBackgroundColor = "Black"
+$Host.PrivateData.VerboseForegroundColor = "Gray"
+$Host.PrivateData.WarningBackgroundColor = "Black"
+$Host.PrivateData.WarningForegroundColor = "Yellow"
 
 # Set powershell style options
 if ($PSStyle) {
@@ -112,8 +113,7 @@ Remove-Variable Settings
 Invoke-Expression (& { (zoxide init powershell | Out-String) }) -ErrorAction SilentlyContinue
 function zri() {
     zoxide query -i -- "$args" | ForEach-Object {
-        $_zoxide_result = $_ -split ' ', 2 
-        # Write-Output $_zoxide_result
+        $_zoxide_result = $_ -split " ", 2 
         zoxide remove "$_zoxide_result"
     }
 }

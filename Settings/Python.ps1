@@ -2,9 +2,9 @@
 if (-not (Get-Command python -ErrorAction Ignore)) { return }
 
 # Set user environment variables
-Set-ItemProperty -Path HKCU:\Environment -Name 'CONDA_AUTO_ACTIVATE_BASE' -Value $false
-Set-ItemProperty -Path HKCU:\Environment -Name 'VIRTUAL_ENV_DISABLE_PROMPT' -Value $true
-Set-ItemProperty -Path HKCU:\Environment -Name 'PIPX_HOME' -Value "$ENV:LOCALAPPDATA\pipx"
+Set-ItemProperty -Path HKCU:\Environment -Name "CONDA_AUTO_ACTIVATE_BASE" -Value $false
+Set-ItemProperty -Path HKCU:\Environment -Name "VIRTUAL_ENV_DISABLE_PROMPT" -Value $true
+Set-ItemProperty -Path HKCU:\Environment -Name "PIPX_HOME" -Value "$ENV:LOCALAPPDATA\pipx"
 
 function Global:Invoke-Python { & (Get-Command "python").source @args }
 Set-Alias py Invoke-Python

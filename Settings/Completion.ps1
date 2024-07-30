@@ -6,7 +6,7 @@ if ($PSVersionTable.PSVersion.Major -lt 6) { return }
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
     dotnet complete --position $cursorPosition "$commandAst" | ForEach-Object {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
     }
 }
 
@@ -17,6 +17,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     $Local:word = $wordToComplete.Replace('"', '""')
     $Local:ast = $commandAst.ToString().Replace('"', '""')
     winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
     }
 }

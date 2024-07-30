@@ -10,8 +10,8 @@ $PSReadLineOptions = @{
     Colors = @{
         Command = "Green"
         Comment = "DarkGray"
-        ContinuationPrompt = 'DarkGray'
-        InlinePrediction = 'DarkGray'
+        ContinuationPrompt = "DarkGray"
+        InlinePrediction = "DarkGray"
         Keyword = "Magenta"
         Member = "Cyan"
         Number = "Magenta"
@@ -30,7 +30,7 @@ Set-PSReadLineOption @PSReadLineOptions
 $ESC = "$([char]0x1b)" # Required for PowerShell 5.1
 $OnViModeChange = [scriptblock] {
     # Set the cursor to a blinking block.
-    if ($args[0] -eq 'Command') { Write-Host -NoNewline "$ESC[1 q" }
+    if ($args[0] -eq "Command") { Write-Host -NoNewline "$ESC[1 q" }
     # Set the cursor to a blinking line.
     else { Write-Host -NoNewline "$ESC[5 q" }
 }
