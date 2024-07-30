@@ -110,6 +110,13 @@ Remove-Variable Settings
 
 # Initialize zoxide compatibility
 Invoke-Expression (& { (zoxide init powershell | Out-String) }) -ErrorAction SilentlyContinue
+function zri() {
+    zoxide query -i -- "$args" | ForEach-Object {
+        $_zoxide_result = $_ -split ' ', 2 
+        # Write-Output $_zoxide_result
+        zoxide remove "$_zoxide_result"
+    }
+}
 
 # Set hook for scoop-search
 # Improves search performance for the scoop package manager
