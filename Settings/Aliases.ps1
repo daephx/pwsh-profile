@@ -44,6 +44,28 @@ function md5 { Get-FileHash -Algorithm MD5 @args }
 function sha1 { Get-FileHash -Algorithm SHA1 @args }
 function sha256 { Get-FileHash -Algorithm SHA256 @args }
 
+# Editor settings
+$env:EDITOR = "nvim"
+$env:GIT_EDITOR = "nvim"
+function vi { & nvim @args }
+function vs { & devenv @args }
+
+# Override git editor for VSCode integrated terminal
+if ($env:TERM_PROGRAM -eq "vscode") {
+    $env:GIT_EDITOR = "code --wait"
+}
+
+# Check if git is installed
+if (Get-Command "git" -ErrorAction Ignore) {
+    Remove-Item -Force Alias:gl
+    Set-Alias -Name g -Value "git"
+    Set-Alias -Name gti -Value "git"
+    function gd { git diff @args }
+    function gds { git diff --staged @args }
+    function gl { git log --oneline @args }
+    function gs { git status @args }
+}
+
 # Replace default list directory utility
 if (Get-Command "eza" -ErrorAction Ignore) {
 
@@ -65,26 +87,6 @@ else {
     function global:la { Get-ChildItem -Force @args }
     function global:lt { tree @args }
 }
-
-# Editor settings
-$env:EDITOR = "nvim"
-$env:GIT_EDITOR = "nvim"
-function vi { & nvim @args }
-function vs { & devenv @args }
-
-# Override git editor for VSCode integrated terminal
-if ($env:TERM_PROGRAM -eq "vscode") {
-    $env:GIT_EDITOR = "code --wait"
-}
-
-# Git aliases
-Remove-Item -Force Alias:gl
-Set-Alias -Name g -Value "git"
-Set-Alias -Name gti -Value "git"
-function gd { git diff @args }
-function gds { git diff --staged @args }
-function gl { git log --oneline @args }
-function gs { git status @args }
 
 # Quick AutoHotkey script invocation
 $AutoHotkey = "C:\Program Files\AutoHotkey\autohotkey.exe"
