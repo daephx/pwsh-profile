@@ -10,8 +10,13 @@
 
     # Use IncludeRules when you want to run only a subset of the default rule set.
     IncludeRules = @(
+        "PSAvoidLongLines",
+        "PSAvoidTrailingWhitespace",
         "PSPlaceOpenBrace",
-        "PSUseConsistentIndentation"
+        "PSUseCompatibleCmdlets",
+        "PSUseCompatibleSyntax",
+        "PSUseConsistentIndentation",
+        "PSUseConsistentWhitespace"
     )
 
     # Use ExcludeRules when you want to run most of the default set of rules except
@@ -32,6 +37,22 @@
             TargetVersions = @( "5.1", "6.2", "7.0")
         }
 
+        # Enforces compatibility of cmdlets across specified PowerShell versions and platforms
+        PSUseCompatibleCmdlets = @{
+            compatibility = @(
+                "core-6.1.0-linux",
+                "core-6.1.0-macos",
+                "core-6.1.0-windows",
+                "desktop-5.1.14393.206-windows"
+            )
+        }
+
+        # Enforces a maximum line length for readability.
+        PSAvoidLongLines = @{
+            Enable = $true
+            MaximumLineLength = 120
+        }
+
         # Configures brace placement for consistency.
         PSPlaceOpenBrace = @{
             Enable = $true
@@ -42,6 +63,20 @@
         # Enforces consistent indentation.
         PSUseConsistentIndentation = @{
             Enable = $true
+        }
+
+        # Ensures consistent whitespace usage in the script.
+        PSUseConsistentWhitespace = @{
+            Enable = $true
+            CheckInnerBrace = $true
+            CheckOpenBrace = $true
+            CheckOpenParen = $true
+            CheckOperator = $true
+            CheckParameter = $true
+            CheckPipe = $true
+            CheckPipeForRedundantWhitespace = $false
+            CheckSeparator = $true
+            IgnoreAssignmentOperatorInsideHashTable = $false
         }
     }
 }
