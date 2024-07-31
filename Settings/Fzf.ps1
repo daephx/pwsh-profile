@@ -1,9 +1,11 @@
+# Fzf: A command-line fuzzy finder
+# https://github.com/junegunn/fzf
 if (-not (Get-Command fzf -ErrorAction Ignore)) { return }
 
 # Export environment variables
 $ENV:FZF_ALT_COMMAND = "fd -uu -t f"
-$ENV:FZF_DEFAULT_COMMAND = "rg -uu --files -H"
 $ENV:FZF_COMPLETION_TRIGGER = "**"
+$ENV:FZF_DEFAULT_COMMAND = "rg -uu --files -H"
 
 # Define fzf default options
 $ENV:FZF_DEFAULT_OPTS = @"
