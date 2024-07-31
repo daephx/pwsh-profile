@@ -64,8 +64,8 @@ if (Get-Module "PsFzf" -ListAvailable) {
             param($Location)
             Set-Location $Location
         }
-        PSReadlineChordProvider = "ctrl+f"
-        PSReadlineChordReverseHistory = "ctrl+r"
+        PSReadlineChordProvider = "Ctrl+t"
+        PSReadlineChordReverseHistory = "Ctrl+r"
         TabExpansion = $True
     }
     Set-PsFzfOption @Options
