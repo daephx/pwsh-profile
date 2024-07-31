@@ -1,14 +1,25 @@
 if (-not (Get-Command fzf -ErrorAction Ignore)) { return }
 
-# Define colors
-$FZF_COLORS = @"
+# Export environment variables
+$ENV:FZF_ALT_COMMAND = "fd -uu -t f"
+$ENV:FZF_DEFAULT_COMMAND = "rg -uu --files -H"
+$ENV:FZF_COMPLETION_TRIGGER = "**"
+
+# Define fzf default options
+$ENV:FZF_DEFAULT_OPTS = @"
+--info=inline
+--layout=reverse
+--margin=0,1
+--pointer='❯'
+--preview-window==border-left
+--prompt='❯ '
 --color=dark
 --color=bg+:-1
 --color=bg:-1
---color=gutter:-1
 --color=border:238
 --color=fg+:15
 --color=fg:8
+--color=gutter:-1
 --color=header:3
 --color=hl+:3
 --color=hl:6
@@ -18,14 +29,7 @@ $FZF_COLORS = @"
 --color=preview-fg:7
 --color=prompt:4
 --color=spinner:3
-"@
-
-$FZF_EVENTS = @"
 --bind='change:top'
-"@
-
-# Define keymaps
-$FZF_KEYMAPS = @"
 --bind='alt-a:toggle-all'
 --bind='alt-d:page-down+refresh-preview'
 --bind='alt-g:ignore'
@@ -43,34 +47,6 @@ $FZF_KEYMAPS = @"
 --bind='end:last'
 --bind='home:top'
 "@
-
-$FZF_OPTIONS = @"
---info=inline
---layout=reverse
---margin=0,1
---preview-window border-left
---pointer='❯'
---prompt='❯ '
-"@
-
-# Extra options
-$ENV:FZF_ALT_COMMAND = "fd -uu -t f"
-$ENV:FZF_DEFAULT_COMMAND = "rg -uu --files -H"
-$ENV:FZF_COMPLETION_TRIGGER = "**"
-
-# Export environment variables
-$ENV:FZF_DEFAULT_OPTS = @"
-$FZF_COLORS
-$FZF_EVENTS
-$FZF_KEYMAPS
-$FZF_OPTIONS
-"@
-
-# Cleanup temporary variables
-Clear-Variable -Name FZF_COLORS
-Clear-Variable -Name FZF_EVENTS
-Clear-Variable -Name FZF_KEYMAPS
-Clear-Variable -Name FZF_OPTIONS
 
 # PsFzf Module options
 if (Get-Module "PsFzf" -ListAvailable) {
@@ -92,12 +68,12 @@ if (Get-Module "PsFzf" -ListAvailable) {
     Set-Alias fh    Invoke-FuzzyHistory
     Set-Alias fkill Invoke-FuzzyKillProcess
     Set-Alias fza   Set-LocationFuzzyEverything
-}
 
-if (Get-Module "PSReadLine" -ListAvailable) {
-    # NOTE: Issue with PsFzf that prevents tab completion from adding trailing slash for directories
-    # Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+    if (Get-Module "PSReadLine" -ListAvailable) {
+        # NOTE: Issue with PsFzf that prevents tab completion from adding trailing slash for directories
+        # Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 
-    # Set-PSReadLineKeyHandler -Key Ctrl-r -ScriptBlock { Invoke-FuzzyHistory }
-    # Set-PSReadLineKeyHandler -Key Ctrl-t -ScriptBlock { Invoke-FuzzySetLocation }
+        # Set-PSReadLineKeyHandler -Key Ctrl-r -ScriptBlock { Invoke-FuzzyHistory }
+        # Set-PSReadLineKeyHandler -Key Ctrl-t -ScriptBlock { Invoke-FuzzySetLocation }
+    }
 }
