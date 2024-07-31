@@ -48,6 +48,15 @@ $ENV:FZF_DEFAULT_OPTS = @"
 --bind='home:top'
 "@
 
+# Ctrl-p | Toggle small preview window to see the full command
+# Ctrl-y | Copy the command into clipboard using xclip
+$ENV:FZF_CTRL_R_OPTS = @"
+--header 'Press CTRL-Y to copy command into clipboard'
+--bind 'alt-p:toggle-preview'
+--bind 'ctrl-y:execute-silent(echo -n {2..} | xclip)+abort'
+--preview 'echo {}' --preview-window up:3:hidden:wrap
+"@
+
 # PsFzf Module options
 if (Get-Module "PsFzf" -ListAvailable) {
     $Options = @{
@@ -77,4 +86,3 @@ if (Get-Module "PsFzf" -ListAvailable) {
         # Set-PSReadLineKeyHandler -Key Ctrl-t -ScriptBlock { Invoke-FuzzySetLocation }
     }
 }
-
