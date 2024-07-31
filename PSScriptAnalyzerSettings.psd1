@@ -34,7 +34,7 @@
         # Ensures syntax compatibility with specified PowerShell versions.
         PSUseCompatibleSyntax = @{
             Enable = $true
-            TargetVersions = @( "5.1", "6.2", "7.0")
+            TargetVersions = @( "5.1", "7.4")
         }
 
         # Enforces compatibility of cmdlets across specified PowerShell versions and platforms
