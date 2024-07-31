@@ -5,6 +5,9 @@
     # not Information diagnostic records.
     Severity = @("Error", "Warning")
 
+    # Enable default rules in the PSScriptAnalyzer configuration.
+    IncludeDefaultRules = $true
+
     # Use IncludeRules when you want to run only a subset of the default rule set.
     IncludeRules = @(
         "PSPlaceOpenBrace",
