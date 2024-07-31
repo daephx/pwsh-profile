@@ -62,12 +62,12 @@ if (Get-Module "PsFzf" -ListAvailable) {
     Set-PsFzfOption @Options
     Clear-Variable -Name Options
 
-    Set-Alias fe    Invoke-FuzzyEdit
-    Set-Alias ff    Invoke-FuzzySetLocation
-    Set-Alias fgs   Invoke-FuzzyGitStatus
-    Set-Alias fh    Invoke-FuzzyHistory
-    Set-Alias fkill Invoke-FuzzyKillProcess
-    Set-Alias fza   Set-LocationFuzzyEverything
+    Set-Alias -Name fe -Value Invoke-FuzzyEdit
+    Set-Alias -Name ff -Value Invoke-FuzzySetLocation
+    Set-Alias -Name fgs -Value Invoke-FuzzyGitStatus
+    Set-Alias -Name fh -Value Invoke-FuzzyHistory
+    Set-Alias -Name fkill -Value Invoke-FuzzyKillProcess
+    Set-Alias -Name fza -Value Set-LocationFuzzyEverything
 
     if (Get-Module "PSReadLine" -ListAvailable) {
         # NOTE: Issue with PsFzf that prevents tab completion from adding trailing slash for directories
@@ -77,3 +77,4 @@ if (Get-Module "PsFzf" -ListAvailable) {
         # Set-PSReadLineKeyHandler -Key Ctrl-t -ScriptBlock { Invoke-FuzzySetLocation }
     }
 }
+
