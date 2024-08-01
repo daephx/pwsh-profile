@@ -80,12 +80,6 @@ else {
 }
 Remove-Variable CurrentShell
 
-# Ensure ssh-agent process is available for the user
-if ($isWindows) {
-    $SshAgentStatus = (Get-Service -Name "ssh-agent" -ErrorAction SilentlyContinue).Status
-    if ($SshAgentStatus -eq "Stopped") { Start-Service -Name "ssh-agent" }
-}
-
 # Load modules
 # Import-Module -Name posh-git
 # Import-Module -Name Terminal-Icons
@@ -108,6 +102,19 @@ $Settings = (Join-Path ($PROFILE | Split-Path -Parent) -ChildPath "Settings")
 
 # Cleanup temporary variables
 Remove-Variable Settings
+
+# Change for and enable the ssh-agent service on windows.
+# NOTE: This is only wrapped in a function because Diagnostics suppression wont work otherwise...
+function Enable-SshAgent {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseCompatibleCmdlets", "")]
+    param()
+    # Ensure ssh-agent process is available for the user
+    if ($isWindows) {
+        $SshAgentStatus = (Get-Service -Name "ssh-agent" -ErrorAction SilentlyContinue).Status
+        if ($SshAgentStatus -eq "Stopped") { Start-Service -Name "ssh-agent" }
+    }
+}
+Enable-SshAgent
 
 # Initialize zoxide compatibility
 Invoke-Expression (& { (zoxide init powershell | Out-String) }) -ErrorAction SilentlyContinue
