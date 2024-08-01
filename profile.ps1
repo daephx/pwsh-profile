@@ -113,7 +113,7 @@ Remove-Variable Settings
 Invoke-Expression (& { (zoxide init powershell | Out-String) }) -ErrorAction SilentlyContinue
 function zri() {
     zoxide query -i -- "$args" | ForEach-Object {
-        $_zoxide_result = $_ -split " ", 2 
+        $_zoxide_result = $_ -split " ", 2
         zoxide remove "$_zoxide_result"
     }
 }
