@@ -2,30 +2,32 @@
 # https://github.com/junegunn/fzf
 if (-not (Get-Command fzf -ErrorAction Ignore)) { return }
 
-# Export environment variables
+# Set default options for FZF
 $ENV:FZF_ALT_COMMAND = "fd -uu -t f"
 $ENV:FZF_COMPLETION_TRIGGER = "**"
 $ENV:FZF_DEFAULT_COMMAND = "rg -uu --files -H"
-
-# Define fzf default options
 $ENV:FZF_DEFAULT_OPTS = @"
---info=inline
+--height=60%
+--info=inline-right
 --layout=reverse
---margin=0,1
+--margin=0,1,0,0
+--marker='⦿'
+--padding 0,1
 --pointer='❯'
---preview-window==border-left
+--preview-window=border-left
 --prompt='❯ '
+--separator=''
 --color=dark
---color=bg+:-1
+--color=bg+:234
 --color=bg:-1
---color=border:238
+--color=border:8
 --color=fg+:15
 --color=fg:8
 --color=gutter:-1
 --color=header:3
 --color=hl+:3
 --color=hl:6
---color=info:5
+--color=info:3
 --color=marker:6
 --color=pointer:3
 --color=preview-fg:7
@@ -33,21 +35,19 @@ $ENV:FZF_DEFAULT_OPTS = @"
 --color=spinner:3
 --bind='change:top'
 --bind='alt-a:toggle-all'
---bind='alt-d:page-down+refresh-preview'
 --bind='alt-g:ignore'
---bind='alt-h:backward-char+refresh-preview'
---bind='alt-l:forward-char+refresh-preview'
 --bind='alt-p:toggle-preview'
 --bind='alt-s:toggle-sort'
---bind='alt-u:page-up+refresh-preview'
 --bind='alt-y:yank'
---bind='ctrl-d:half-page-down+refresh-preview'
+--bind='ctrl-b:preview-page-up'
+--bind='ctrl-d:preview-half-page-down'
 --bind='ctrl-l:clear-screen'
---bind='ctrl-s:preview-page-up'
---bind='ctrl-u:kill-line'
---bind='ctrl-x:preview-page-down'
+--bind='ctrl-u:unix-line-discard'
 --bind='end:last'
---bind='home:top'
+--bind='home:first'
+--bind='pgdn:half-page-down+refresh-preview'
+--bind='pgup:half-page-up+refresh-preview'
+--bind='tab:down,btab:up'
 "@
 
 # Ctrl-p | Toggle small preview window to see the full command
