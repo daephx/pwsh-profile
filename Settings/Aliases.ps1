@@ -71,6 +71,7 @@ if (Get-Command "git" -ErrorAction Ignore) {
 
 # Override cat with alias to bat for syntax highlighting
 if (Get-Command "bat" -ErrorAction Ignore) {
+    Remove-Item -Path alias:cat
     Set-Alias -Name cat -Value bat
 }
 
