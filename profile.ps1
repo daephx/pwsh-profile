@@ -81,14 +81,9 @@ else {
 Remove-Variable CurrentShell
 
 # Load modules
-# Import-Module -Name posh-git
-# Import-Module -Name Terminal-Icons
 # Import-Module -Name PSFzf
-
-# Enable chocolaty helper module if available
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) { Import-Module "$ChocolateyProfile" }
-Remove-Variable ChocolateyProfile
+# Import-Module -Name Terminal-Icons
+# Import-Module -Name posh-git
 
 # Source local profile configuration scripts
 $Settings = (Join-Path ($PROFILE | Split-Path -Parent) -ChildPath "Settings")
@@ -120,6 +115,16 @@ function Enable-SshAgent {
 }
 Enable-SshAgent
 
+# Enable Chocolaty helper module if available
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) { Import-Module "$ChocolateyProfile" }
+Remove-Variable ChocolateyProfile
+
+# Set hook for scoop-search
+# Improves search performance for the scoop package manager
+# https://github.com/ScoopInstaller/Scoop/issues/4239
+Invoke-Expression (& scoop-search --hook) -ErrorAction SilentlyContinue
+
 # Initialize zoxide compatibility
 Invoke-Expression (& { (zoxide init powershell | Out-String) }) -ErrorAction SilentlyContinue
 function zri() {
@@ -128,8 +133,3 @@ function zri() {
         zoxide remove "$_zoxide_result"
     }
 }
-
-# Set hook for scoop-search
-# Improves search performance for the scoop package manager
-# https://github.com/ScoopInstaller/Scoop/issues/4239
-Invoke-Expression (& scoop-search --hook) -ErrorAction SilentlyContinue
