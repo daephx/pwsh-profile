@@ -93,11 +93,15 @@ Remove-Variable ChocolateyProfile
 # Source local profile configuration scripts
 $Settings = (Join-Path ($PROFILE | Split-Path -Parent) -ChildPath "Settings")
 
-. "$Settings/Aliases.ps1"
-. "$Settings/Completion.ps1"
+# Core settings scripts
+# NOTE: These should be initialized first!
 . "$Settings/Environment.ps1"
-. "$Settings/Fzf.ps1"
 . "$Settings/PSReadLine.ps1"
+. "$Settings/Completion.ps1"
+. "$Settings/Aliases.ps1"
+
+# External settings scripts
+. "$Settings/Fzf.ps1"
 . "$Settings/Python.ps1"
 
 # Cleanup temporary variables
