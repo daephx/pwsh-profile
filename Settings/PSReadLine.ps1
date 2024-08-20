@@ -39,9 +39,10 @@ $OnViModeChange = [scriptblock] {
 # Enable vi mode
 Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $OnViModeChange
 
-# Allow ctrl-[ to escape vi command mode
+# Remap CTRL-[ to escape from VI Command mode
 # See: https://github.com/PowerShell/PSReadLine/issues/906
-Set-PSReadLineKeyHandler -Key "Ctrl+Oem4" -Function ViCommandMode
+Set-PSReadLineKeyHandler -Key 'Ctrl+Oem4' -ViMode Insert -Function ViCommandMode
+Set-PSReadLineKeyHandler -Key 'Ctrl+Oem4' -ViMode Command -Function Abort
 
 # Prevent accidental deletion of lines
 Set-PSReadLineKeyHandler -key Escape -Function ViCommandMode
