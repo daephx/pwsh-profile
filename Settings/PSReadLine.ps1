@@ -54,7 +54,6 @@ Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 # Bash similarities
 Set-PSReadLineKeyHandler -Key Ctrl+d -Function ViExit
 Set-PSReadLineKeyHandler -Key Ctrl+k -Function KillWord
-Set-PSReadLineKeyHandler -Key Ctrl+u -Function DeleteLine
 Set-PSReadLineKeyHandler -Key Ctrl+w -Function BackwardKillWord
 
 # Copy current directory to clipboard
